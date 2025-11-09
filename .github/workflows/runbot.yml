@@ -17,14 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Stockfish
-        run: |
-          sudo apt install build-essential
-          cd ./src
-          make build ARCH=x68-64
-          cd ..
-          mv -f ./src/stockfish engines/stockfish
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -35,15 +27,7 @@ jobs:
           pip install -r requirements.txt
  
 
-      - name: Install Stockfish
-        run: |
-          curl -sSL https://raw.githubusercontent.com/ppigazzini/stockfish-downloader/main/posix_helper.sh | sh -s
-          tar -xf stockfish-*.tar
-          rm stockfish-*.tar
-          mv -f stockfish/stockfish-* engines/stockfish
-          rm -r stockfish
-
-      - name: Give perms to execute engines
+      - name: Give perms to execute engine
         run: |
           chmod +x ./engines/stockfish
 
